@@ -1,3 +1,4 @@
 module.exports = {
-  ChallengeController: require('./ChallengeController')
+  ChallengeController: require('./ChallengeController'),
+  ResponseController: require('./ResponseController')
 };
