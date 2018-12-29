@@ -5,9 +5,11 @@ const mongoose = require('mongoose');
 
 const mongoConfig = require('../config/mongo');
 
+console.log({ mongoConfig })
+
 const mongooseOptions = {
-  useMongoClient: true,
-  promiseLibrary: Promise
+  promiseLibrary: Promise,
+  useNewUrlParser: true
 };
 
 let initialized = false;
