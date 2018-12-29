@@ -1,6 +1,7 @@
 const _ = require('lodash');
+const VError = require('verror'); // todo - custom error classes
+const { ObjectId } = require('mongodb');
 const { Challenge } = require('../model');
-const VError = require('VError'); // todo - custom error classes
 
 const constants = require('../constants');
 
@@ -13,6 +14,10 @@ class ChallengeController {
     if (!this.isValidChallenge(attributes)) {
       return Promise.reject(new VError('Invalid challenge attributes'));
     }
+    
+    _.each(attributes.sections, section => {
+      section.questions = _.map(section.questions, question => _.assign(question, { _id: new ObjectId() }))
+    });
     
     const newChallenge = new Challenge(attributes);
     
