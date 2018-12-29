@@ -28,6 +28,8 @@ class ChallengeController {
   }
 
   static findOne(challengeId, options) {
+    options = options || {};
+    
     try {
       challengeId = new ObjectId(challengeId);
     } catch (err) {
