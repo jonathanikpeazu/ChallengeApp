@@ -12,9 +12,16 @@
           "type": "multi_one",
           "prompt": "In which genre would you classify League of Legends?",
           "options": [
-            { "text": "First Person Shooter" },
-            { "text": "MOBA" },
-            { "text": "real-time strategy" }
+            {
+              "text": "First Person Shooter"
+            },
+            {
+              "text": "MOBA"
+            },
+            {
+              "text": "real-time strategy",
+              "isValidSolution": true
+            }
           ]
         }
       ]
@@ -26,9 +33,16 @@
           "type": "multi_multi",
           "prompt": "Which spellings of \"Esports\" are acceptable?",
           "options": [
-            { "text": "Esports" },
-            { "text": "e-sports" },
-            { "text": "eSports" }
+            {
+              "text": "Esports",
+              "isValidSolution": true
+            },
+            {
+              "text": "e-sports"
+            },
+            {
+              "text": "eSports"
+            }
           ]
         }
       ]

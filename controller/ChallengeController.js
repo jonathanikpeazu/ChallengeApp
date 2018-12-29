@@ -23,6 +23,18 @@ class ChallengeController {
     
     return newChallenge.save().then(() => newChallenge);
   }
+
+  static findOne(challengeId, options) {
+    try {
+      challengeId = new ObjectId(challengeId);
+    } catch (err) {
+      return Promise.reject(new VError(err, 'Invalid challenge ID'));
+    }
+
+    if (!options.withSolutions) {
+
+    }
+  }
   
   // todo - TEST
   static isValidChallenge(attributes) {
@@ -58,12 +70,15 @@ class ChallengeController {
       return false;
     }
     
-    // multiple choice questions must have a list of possible options
-    if (
-      _.includes([constants.QUESTION_TYPES.MULTI_ONE, constants.QUESTION_TYPES.MULTI_MULTI], question.type)
-      && _.isEmpty(question.options)
-    ) {
-      return false;
+    // multiple choice questions must have a list of possible options, including at least one valid solution
+    if (_.includes([constants.QUESTION_TYPES.MULTI_ONE, constants.QUESTION_TYPES.MULTI_MULTI], question.type)) {
+      if (_.isEmpty(question.options)) {
+        return false;
+      }
+
+      if (!_(question.options).map('isValidSolution').some()) {
+        return false;
+      }
     }
     
     return true;
