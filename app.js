@@ -2,11 +2,10 @@
 
 const createError = require('http-errors');
 const express = require('express');
-const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const rpcRouter = require('./routes/rpc');
+const getRpcRouter = require('./api/getRpcRouter');
 
 const app = express();
 
@@ -15,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/rpc', rpcRouter);
+app.use('/rpc', getRpcRouter());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
