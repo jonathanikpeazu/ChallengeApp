@@ -1,11 +1,11 @@
 const _ = require('lodash');
 const mongoose = require('mongoose');
 
-const RESPONSE_STATUSES = require('../lib/constants');
+const { RESPONSE_STATUSES } = require('../lib/constants');
 
 const responseSchema = mongoose.Schema({
   uid: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true
   },
   challengeId: {
