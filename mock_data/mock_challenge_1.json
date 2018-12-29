@@ -1,0 +1,37 @@
+{
+  "name": "Mock Challenge 1",
+  "sections": [
+    {
+      "name": "League of Legends",
+      "questions": [
+        {
+          "type": "freetext",
+          "prompt": "Discuss the sustainability of League of Legends as a high school esport"
+        },
+        {
+          "type": "multi_one",
+          "prompt": "In which genre would you classify League of Legends?",
+          "options": [
+            { "text": "First Person Shooter" },
+            { "text": "MOBA" },
+            { "text": "real-time strategy" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Esports (general)",
+      "questions": [
+        {
+          "type": "multi_multi",
+          "prompt": "Which spellings of \"Esports\" are acceptable?",
+          "options": [
+            { "text": "Esports" },
+            { "text": "e-sports" },
+            { "text": "eSports" }
+          ]
+        }
+      ]
+    }
+  ]
+}
