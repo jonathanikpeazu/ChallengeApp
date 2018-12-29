@@ -1,19 +1,15 @@
 {
   "name": "challenge-app",
-  "version": "1.0.0",
-  "description": "Challenge application for PlayVS",
-  "main": "index.js",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"No tests configured\""
+    "start": "node ./bin/www"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jonathanikpeazu/ChallengeApp.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jonathanikpeazu/ChallengeApp/issues"
-  },
-  "homepage": "https://github.com/jonathanikpeazu/ChallengeApp#readme"
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "morgan": "~1.9.0"
+  }
 }
