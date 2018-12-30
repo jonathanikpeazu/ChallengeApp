@@ -5,6 +5,7 @@ const { Challenge } = require('../../model/index');
 
 const ChallengeValidation = require('./lib/ChallengeValidation');
 const removeSolutionsFromChallenge = require('./lib/removeSolutionsFromChallenge');
+const isQuestionMultipleChoice = require('./lib/isQuestionMultipleChoice');
 
 const constants = require('../../lib/constants');
 
@@ -13,13 +14,27 @@ class ChallengeController {
     attributes = _.assign(attributes, {
       createdAt: new Date()
     });
-    
+
     if (!ChallengeValidation.isValidChallenge(attributes)) {
       return Promise.reject(new VError('Invalid challenge attributes'));
     }
     
     _.each(attributes.sections, section => {
-      section.questions = _.map(section.questions, question => _.assign(question, { _id: new ObjectId() }))
+      section.questions = _.map(section.questions, question => {
+        // Assign an Object ID to each question
+        const completeQuestion = _.assign(question, {
+          _id: new ObjectId()
+        });
+
+        // Assign an ID to each multiple choice option
+        if (isQuestionMultipleChoice(question)) {
+          _.assign(completeQuestion, {
+            options: _.map(question.options, (option, index) => _.assign(option, {id: index}))
+          });
+        }
+
+        return completeQuestion;
+      });
     });
     
     const newChallenge = new Challenge(attributes);

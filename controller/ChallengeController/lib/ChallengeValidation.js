@@ -1,5 +1,6 @@
 const _ = require('lodash');
 
+const constants = require('../../../lib/constants');
 const isQuestionMultipleChoice = require('./isQuestionMultipleChoice');
 
 // todo - TEST
@@ -7,6 +8,7 @@ const ChallengeValidation = {
   isValidChallenge(attributes) {
     return (
       _.isPlainObject(attributes)
+        && !_.isEmpty(attributes)
       && !_.isEmpty(attributes.name)
       && !_.isEmpty(attributes.sections)
       && _.every(attributes.sections, section => ChallengeValidation.isValidSection(section))
