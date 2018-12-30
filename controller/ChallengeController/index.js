@@ -19,17 +19,19 @@ class ChallengeController {
       return Promise.reject(new VError('Invalid challenge attributes'));
     }
     
-    _.each(attributes.sections, section => {
-      section.questions = _.map(section.questions, question => {
+    _.each(attributes.sections, (section, sectionIndex) => {
+      section.id = String(sectionIndex);
+      
+      section.questions = _.map(section.questions, (question, questionIndex) => {
         // Assign an Object ID to each question
         const completeQuestion = _.assign(question, {
-          _id: new ObjectId()
+          id: `${sectionIndex}_${questionIndex}`
         });
 
         // Assign an ID to each multiple choice option
         if (isQuestionMultipleChoice(question)) {
           _.assign(completeQuestion, {
-            options: _.map(question.options, (option, index) => _.assign(option, {id: index}))
+            options: _.map(question.options, (option, index) => _.assign(option, {id: String(index)}))
           });
         }
 

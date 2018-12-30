@@ -14,7 +14,7 @@ const responseSchema = mongoose.Schema({
     required: true
   },
   responses: {
-    type: mongoose.Schema.Types.Map
+    type: mongoose.Schema.Types.Mixed
   },
   status: {
     type: String,

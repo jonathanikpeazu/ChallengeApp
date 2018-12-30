@@ -10,7 +10,10 @@ module.exports = function registerRpcRoutes(rpcResponder) {
   });
   
   rpcResponder.register('Response', {
-    begin: (params) => ResponseController.begin(params.challengeId, params.uid)
+    begin: (params) => ResponseController.begin(params.challengeId, params.uid),
+    findOne: (params) => ResponseController.findOne(params.id),
+    submitResponses: (params) => ResponseController.submitResponses(params.id, params.responses),
+    calculateScore: (params) => ResponseController.calculateScore(params.id)
   });
 
   rpcResponder.register('Ping', {
