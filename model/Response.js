@@ -16,6 +16,9 @@ const responseSchema = mongoose.Schema({
   responses: {
     type: mongoose.Schema.Types.Mixed
   },
+  scoring: {
+    type: mongoose.Schema.Types.Mixed
+  },
   status: {
     type: String,
     required: true,
