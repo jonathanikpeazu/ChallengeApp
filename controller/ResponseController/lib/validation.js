@@ -6,14 +6,16 @@ module.exports = {
       .map((newResponse, questionId) => {
         const responseTemplate = response.responses[questionId];
         if (!responseTemplate) {
-          return {questionId, reason: 'Invalid question ID'};
+          return { questionId, reason: 'Invalid question ID' };
         }
         if (responseTemplate.type !== newResponse.type) {
-          return {questionId, reason: `Invalid type: expected ${responseTemplate.type}`};
+          return { questionId, reason: `Invalid type: expected ${responseTemplate.type}` };
         }
+
+        return null;
       })
       .compact()
       .value();
     return invalidResponses;
-  }
+  },
 };

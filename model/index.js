@@ -1,4 +1,4 @@
 module.exports = {
   Challenge: require('./Challenge'),
-  Response: require('./Response')
+  Response: require('./Response'),
 };

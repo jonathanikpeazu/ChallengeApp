@@ -6,32 +6,32 @@ const { RESPONSE_STATUSES } = require('../lib/constants');
 const responseSchema = mongoose.Schema({
   uid: {
     type: String,
-    required: true
+    required: true,
   },
   challengeId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Challenge',
-    required: true
+    required: true,
   },
   responses: {
-    type: mongoose.Schema.Types.Mixed
+    type: mongoose.Schema.Types.Mixed,
   },
   scoring: {
-    type: mongoose.Schema.Types.Mixed
+    type: mongoose.Schema.Types.Mixed,
   },
   status: {
     type: String,
     required: true,
-    enum: _.values(RESPONSE_STATUSES)
+    enum: _.values(RESPONSE_STATUSES),
   },
   createdAt: {
     type: Date,
-    required: true
+    required: true,
   },
   updatedAt: {
     type: Date,
-    required: true
-  }
+    required: true,
+  },
 });
 
 const Response = mongoose.model('Response', responseSchema);

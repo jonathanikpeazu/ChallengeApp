@@ -11,7 +11,7 @@ module.exports = {
 
     return _.mapValues(questionsById, question => ({
       type: question.type,
-      response: null
+      response: null,
     }));
-  }
+  },
 };
