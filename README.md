@@ -41,11 +41,11 @@ A Challenge document contains questions, broken up into sections. Each section a
 #### Response
 A Response document contains responses to a Challenge document.
 
-- Upon creation, the Response document contains placeholder responses for each question. This allows us to do typechecking during `Response.submitResponses` without having to look up the original Challenge document.
-- The response and scoring subdocuments are both keyed by the `id`s assigned in the Challenge creation phase, to simplify response submission code and allow databases to index this data much more efficiently. Ex. It is difficult/awkward to index the field "score" of an object at the second element in an array.
+- Upon creation, the Response document contains placeholder responses for each question for typechecking during `Response.submitResponses` without having to look up the original Challenge document.
+- The response and scoring subdocuments are both keyed by the `id`s assigned in the Challenge creation phase, to simplify the schema/code for `submitResponses` and allow databases to index this data much more efficiently. Ex. It is difficult/awkward to index the field "score" of an object at the second element in an array.
 - The scoring subdocument contains an overall score, pluse a field called "questions" and a field called "sections", so that we can query by overall score, question score, or section score. Scoring is either `NOT_STARTED`, `IN_PROGRESS`, or `COMPLETE`. Each score is `-1` until they have been graded.
 
-### Using the API
+### Walking through the API
 Since I have provided a PAW file with sample data, I will not fully explain the data schemas in this doc. Instead, I will walk through a simple flow to test all of the features:
 
 #### 1) Create a new challenge
@@ -63,10 +63,22 @@ Use `Response.finalize` to close your response document, allowing it to be grade
 #### 5) Submit scores for freetext responses.
 Use `Response.submitScores` to give feedback on a user's finalized freetext responses. As with `submitResponses`, this can be done in multiple requests. `Scoring.status` will equal `COMPLETE` when all questions have been scored.
 
-### Design considerations
+### Design Considerations
 #### Schema validation
 In a world of un-typed languages, things can get hairy, so it's important not to let garbage get into your database. This can be achieved by adding validation code to your controller functions, but I prefer to front-load this in the server layer when possible by defining `Joi` schemas for each request in `api/requestSchemas`. This simplifies both server and test code and leads to less duplication and boilerplate. It also has the benefit of being config-driven and self-documenting. There is still additional, more complex validation code in the controller layer, such as checking for the correct response type during `Response.submitResponses`.
 
-#### Model / Controller design
+#### Model / Controller Design
 Mongoose offers the freedom to add custom pre-save hooks, class methods, etc. to our data model. However, I made the decision to keep all business logic (ex. assigning question/section IDs on the Challenge object in `Challenge.create`),to keep a nice decoupling between business logic, view logic, and database code. This is an advantage in case a technology migration ever needs to happen in the future.
 
+#### Unit Tests
+The unit tests for this module are incomplete, but I wrote a few for the more algo-intensive methods.
+
+### Hypothetical Front-End Application
+The user-facing side of this app would work by authenticating the user to display his/her available challenges (not implemented). Once a user selects a Challenge to complete, the app would load the entire challenge using `Challenge.findOne`, and use view elements to display a single section at once. Each time the user advanced to the next section, `Response.submitResponses` would be called. Finally, when the user arrived at the end, he/she would hit a button to call `Response.finalize()`.
+
+The admin-facing side of this app would be a portal which allowed you to upload new test documents, query for highest scores (not implemented), and submit scores for freetext questions.
+
+### Future Directions
+- More query methods for Responses. (`findByStatus()`, `findByHighScore()`, etc.)
+- Secret admin tokens on `Challenge.create`, `Challenge.findOne({ includeSolutions: true})`, etc.
+- Authentication and document access-control.
