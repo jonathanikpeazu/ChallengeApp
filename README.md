@@ -7,7 +7,7 @@ Steps to run locally:
 - Clone the repo from GitHub: \
 `$ git clone https://github.com/jonathanikpeazu/ChallengeApp.git`
 
-- Run the install script. This will install mongodb to your machine via Homebrew, and create the local Mongo data directory: \
+- Run the install script. This will install mongodb to your machine via Homebrew, and create the local Mongo data directory. Your terminal output may be quite for a few minutes: \
 `$ cd ChallengeApp` \
 `$ ./install.sh`
 
