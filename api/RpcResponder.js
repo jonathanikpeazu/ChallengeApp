@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const VError = require('verror');
 
 let instance;
 class RpcResponder {
@@ -9,10 +10,11 @@ class RpcResponder {
 
   constructor() {
     this._methods = {};
+    this._schemas = {};
   }
 
   // registering method is idempotent
-  register(namespace, methodConfigs) {
+  registerMethods(namespace, methodConfigs) {
     methodConfigs = _.mapValues(methodConfigs, (method) => {
       // transform any plain string methods to method configs
       let methodConfig;
@@ -26,6 +28,10 @@ class RpcResponder {
     this._methods[namespace] = _.assign(existingMethodsForNamespace, methodConfigs);
   }
 
+  registerSchemas(requestSchemas) {
+    this._schemas = requestSchemas;
+  }
+
   getMethod(namespace, methodName) {
     return _.get(this._methods, [namespace, methodName], null);
   }
@@ -33,6 +39,8 @@ class RpcResponder {
   static sendErrorResponse(res, requestId, statusCode, data) {
     if (_.isString(data)) {
       data = { message: data };
+    } else if (_.isError(data)) {
+      data = { message: data.message };
     }
 
     return res.status(statusCode).json(data).end();
@@ -50,7 +58,15 @@ class RpcResponder {
     const methodComponents = _.split(methodName, '.');
     const methodConfig = this.getMethod(methodComponents[0], methodComponents[1]);
     if (!methodConfig) {
-      return this.constructor.sendErrorResponse(res, id, 400, 'Method not found');
+      return this.constructor.sendErrorResponse(res, id, 400, new VError('Method not found'));
+    }
+
+    const paramsSchema = _.get(this._schemas, methodName);
+    if (paramsSchema) {
+      const validationError = paramsSchema.validate(params).error;
+      if (validationError) {
+        return this.constructor.sendErrorResponse(res, id, 400, validationError);
+      }
     }
 
     return methodConfig.method.call(null, params)
@@ -59,7 +75,7 @@ class RpcResponder {
         console.error({
           err, params, id, method: methodName,
         }, `ERROR: ${methodName}`);
-        return this.constructor.sendErrorResponse(res, id, 500, err.message);
+        return this.constructor.sendErrorResponse(res, id, 500, err);
       });
   }
 }
