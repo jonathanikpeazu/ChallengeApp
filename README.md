@@ -37,6 +37,8 @@ For this project, I decided to go with a JSON RPC-style API, rather than REST. R
 
 RPC style is a good alternative because it requires less boilerplate, is easy to document, and is transport-agnostic, making it easy to migrate to web sockets or any other transport protocol.
 
+RPC routes are registered in `api/registerRpcRoutes`. They are handled by `RpcResponder`, which I borrowed from another personal project.
+
 ### Data Model
 There are two main data types in this demo:
 - A `Challenge` is created by an administrator by uploading a JSON document.
