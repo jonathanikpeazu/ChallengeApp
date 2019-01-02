@@ -5,6 +5,7 @@ const { Response, Challenge } = require('../../model');
 const { RESPONSE_STATUSES } = require('../../lib/constants');
 const utils = require('./lib/utils');
 const Scoring = require('./lib/scoring');
+const Validation = require('./lib/validation');
 
 class ResponseController {
   static begin(challengeId, uid) {
@@ -29,6 +30,7 @@ class ResponseController {
   }
   
 
+  // todo - test
   static submitResponses(responseId, newResponses) {
     if (_.isEmpty(newResponses)) {
       return Promise.reject(new VError('No responses submitted'));
@@ -39,7 +41,11 @@ class ResponseController {
         if (!response) return Promise.reject(new VError('Response not found'));
         if (response.status !== RESPONSE_STATUSES.IN_PROGRESS) return Promise.reject(new VError('Unable to update response that has been completed'));
 
-        // todo johno - validate response type
+        const invalidResponses = Validation.getInvalidResponses(response, newResponses);
+        if (!_.isEmpty(invalidResponses)) {
+          return Promise.reject(new VError(`Invalid responses: ${JSON.stringify(invalidResponses)}`));
+        }
+        
         const updatedResponses = _.assign({}, response.responses, newResponses);
 
         _.assign(response, {
@@ -48,8 +54,10 @@ class ResponseController {
         });
 
         return response.save();
-      })
+      });
   }
+
+  
 
   static finalize(responseId, uid) {
     return Response.findById(responseId)
