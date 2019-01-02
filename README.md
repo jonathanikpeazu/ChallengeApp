@@ -8,9 +8,7 @@ Steps to run locally:
 `$ git clone https://github.com/jonathanikpeazu/ChallengeApp.git`
 
 - Run the install script. This will install mongodb to your machine via Homebrew, and create the local Mongo data directory:
-`$ cd ChallengeApp`
-
-`$ ./install.sh`
+`$ cd ChallengeApp` \n `$ ./install.sh`
 
 - Start the server. If you encounter the error `Block-scoped declarations not yet supported`, you may have to upgrade your version of Node.:
 `$ node ./bin/www
