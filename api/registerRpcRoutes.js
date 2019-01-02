@@ -5,7 +5,7 @@ module.exports = function registerRpcRoutes(rpcResponder) {
   rpcResponder.registerSchemas(requestSchemas);
 
   rpcResponder.registerMethods('Ping', {
-    ping: params => Promise.resolve(params.message),
+    ping: params => Promise.resolve(params && params.message),
   });
 
   rpcResponder.registerMethods('Challenge', {
