@@ -18,17 +18,16 @@ class ResponseController {
           challengeId,
           status: RESPONSE_STATUSES.IN_PROGRESS,
           responses: utils.createResponsesDoc(challenge),
-          scoring: Scoring.createScoringDoc(challenge),
+          scoring: utils.createScoringDoc(challenge),
           createdAt: new Date(),
           updatedAt: new Date(),
         };
 
         const newResponse = new Response(attributes);
 
-        return newResponse.save().then(() => newResponse);
+        return newResponse.save();
       });
   }
-
 
   // todo - test
   static submitResponses(responseId, newResponses) {
@@ -57,7 +56,6 @@ class ResponseController {
       });
   }
 
-
   static finalize(responseId, uid) {
     return Response.findById(responseId)
       .then((response) => {
@@ -81,23 +79,17 @@ class ResponseController {
 
         Scoring.assignStatusAndOverallScore(scoringDoc);
 
-        const updatedScoringDoc = _.cloneDeep(scoringDoc);
-        console.log({ updatedScoringDoc });
-
         // NOTE - This drove me crazy, I have no idea why this is necessary, but it works.
         // Otherwise updatedScoringDoc won't persist in the DB.
         // todo - figure out how to fix this.
         response.scoring = null;
         _.assign(response, {
           status: RESPONSE_STATUSES.COMPLETE,
-          scoring: updatedScoringDoc,
+          scoring: scoringDoc,
           updatedAt: new Date(),
         });
 
-        return response.save().then(() => {
-          console.log({ savedResponse: response });
-          return response;
-        });
+        return response.save();
       });
   }
 
@@ -139,15 +131,14 @@ class ResponseController {
 
         Scoring.assignStatusAndOverallScore(scoringDoc);
 
-        response.scoring = null;
-
         // todo - remove updatedAt boilerplate by using a Model mixin.
+        response.scoring = null;
         _.assign(response, {
           scoring: scoringDoc,
           updatedAt: new Date(),
         });
 
-        return response.save().then(() => response);
+        return response.save();
       });
   }
 }

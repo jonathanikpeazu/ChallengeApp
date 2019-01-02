@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const VError = require('verror'); // todo - custom error classes
-const { Challenge } = require('../../model/index');
+const { Challenge } = require('../../model');
 
 const ChallengeValidation = require('./lib/validation');
 const removeSolutionsFromChallenge = require('./lib/removeSolutionsFromChallenge');
@@ -20,7 +20,7 @@ class ChallengeController {
       section.id = String(sectionIndex);
 
       section.questions = _.map(section.questions, (question, questionIndex) => {
-        // Assign an Object ID to each question
+        // Assign an ID to each question
         const completeQuestion = _.assign(question, {
           id: `${sectionIndex}_${questionIndex}`,
         });
@@ -39,9 +39,10 @@ class ChallengeController {
 
     const newChallenge = new Challenge(attributes);
 
-    return newChallenge.save().then(() => newChallenge);
+    return newChallenge.save();
   }
 
+  // options.includeSolutions is false by default.
   static findOne(challengeId, options) {
     options = options || {};
 

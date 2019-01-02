@@ -4,30 +4,6 @@ const { SCORING_STATUSES } = require('../../../lib/constants');
 const isQuestionMultipleChoice = require('../../../lib/isQuestionMultipleChoice');
 
 const Scoring = {
-  createScoringDoc(challenge) {
-    const sectionIds = _.map(challenge.sections, 'id');
-    const sectionScores = _(sectionIds)
-      .mapKeys()
-      .mapValues(() => ({ score: -1 }))
-      .value();
-
-    const questionIds = _(challenge.sections)
-      .map(section => _.map(section.questions, 'id'))
-      .reduce((a, b) => a.concat(b), []);
-
-    const questionScores = _(questionIds)
-      .mapKeys()
-      .mapValues(() => ({ score: -1 }))
-      .value();
-
-    return {
-      status: SCORING_STATUSES.NOT_STARTED,
-      score: -1,
-      questions: questionScores,
-      sections: sectionScores,
-    };
-  },
-
   getMultipleChoiceQuestionScores(challenge, response) {
     const responses = response.responses;
 
