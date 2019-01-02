@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 const SCORING_STATUSES = require('../../../lib/constants').SCORING_STATUSES;
-const isQuestionMultipleChoice = require('../../ChallengeController/lib/isQuestionMultipleChoice');
+const isQuestionMultipleChoice = require('../../../lib/isQuestionMultipleChoice');
 
 const Scoring = {
   createScoringDoc(challenge) {

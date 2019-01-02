@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 
-const isQuestionMultipleChoice = require('./isQuestionMultipleChoice');
+const isQuestionMultipleChoice = require('./../../../lib/isQuestionMultipleChoice');
 
 
 module.exports = function removeSolutionsFromChallenge(challenge) {

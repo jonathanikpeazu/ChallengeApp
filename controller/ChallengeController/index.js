@@ -4,7 +4,7 @@ const { Challenge } = require('../../model/index');
 
 const ChallengeValidation = require('./lib/ChallengeValidation');
 const removeSolutionsFromChallenge = require('./lib/removeSolutionsFromChallenge');
-const isQuestionMultipleChoice = require('./lib/isQuestionMultipleChoice');
+const isQuestionMultipleChoice = require('./../../lib/isQuestionMultipleChoice');
 
 class ChallengeController {
   static create(attributes) {
