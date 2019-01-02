@@ -1,15 +1,15 @@
-'use strict'
+
 
 const Promise = require('bluebird');
 const mongoose = require('mongoose');
 
 const mongoConfig = require('../config/mongo');
 
-console.log({ mongoConfig })
+console.log({ mongoConfig });
 
 const mongooseOptions = {
   promiseLibrary: Promise,
-  useNewUrlParser: true
+  useNewUrlParser: true,
 };
 
 let initialized = false;

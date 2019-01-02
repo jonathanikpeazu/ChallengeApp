@@ -1,10 +1,7 @@
-'use strict'
-
 const _ = require('lodash');
 
 let instance;
 class RpcResponder {
-
   static getInstance() {
     instance = instance || new this();
     return instance;
@@ -16,10 +13,10 @@ class RpcResponder {
 
   // registering method is idempotent
   register(namespace, methodConfigs) {
-    methodConfigs = _.mapValues(methodConfigs, method => {
+    methodConfigs = _.mapValues(methodConfigs, (method) => {
       // transform any plain string methods to method configs
       let methodConfig;
-      if (_.isFunction(method)) methodConfig = {method};
+      if (_.isFunction(method)) methodConfig = { method };
       else methodConfig = method;
 
       return methodConfig;
@@ -35,7 +32,7 @@ class RpcResponder {
 
   static sendErrorResponse(res, requestId, statusCode, data) {
     if (_.isString(data)) {
-      data = { message: data }
+      data = { message: data };
     }
 
     return res.status(statusCode).json(data).end();
@@ -46,9 +43,7 @@ class RpcResponder {
   }
 
   respond(req, res) {
-    const id = req.body.id;
-    const params = req.body.params;
-    const methodName = req.body.method;
+    const { id, methodName, params } = req.body;
 
     const methodComponents = _.split(methodName, '.');
     const methodConfig = this.getMethod(methodComponents[0], methodComponents[1]);
@@ -58,8 +53,10 @@ class RpcResponder {
 
     return methodConfig.method.call(null, params)
       .then(result => this.constructor.sendSuccessResponse(res, id, result))
-      .catch(err => {
-        console.error({err: err, params, id, method: methodName}, `ERROR: ${methodName}`);
+      .catch((err) => {
+        console.error({
+          err, params, id, method: methodName,
+        }, `ERROR: ${methodName}`);
         return this.constructor.sendErrorResponse(res, id, 500, err.message);
       });
   }

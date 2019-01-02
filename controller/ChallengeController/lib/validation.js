@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 const constants = require('../../../lib/constants');
-const isQuestionMultipleChoice = require('./isQuestionMultipleChoice');
+const isQuestionMultipleChoice = require('./../../../lib/isQuestionMultipleChoice');
 
 // todo - TEST
 const ChallengeValidation = {
@@ -25,7 +25,6 @@ const ChallengeValidation = {
   },
 
   isValidQuestion(question) {
-
     // if it's not an object, or is missing "type" or "prompt", return false.
     if (!_.isPlainObject(question)
       || _.some(['type', 'prompt'], field => _.isEmpty(question[field]))) {
@@ -34,12 +33,13 @@ const ChallengeValidation = {
 
     // if it's an invalid question type, return false.
     if (!_(constants.QUESTION_TYPES)
-        .values()
-        .includes(question.type)) {
+      .values()
+      .includes(question.type)) {
       return false;
     }
 
-    // multiple choice questions must have a list of possible options, including at least one valid solution
+    // multiple choice questions must have a list of possible options
+    // with at least one valid solution.
     if (isQuestionMultipleChoice(question)) {
       if (_.isEmpty(question.options)) {
         return false;
@@ -51,7 +51,7 @@ const ChallengeValidation = {
     }
 
     return true;
-  }
+  },
 };
 
 module.exports = ChallengeValidation;

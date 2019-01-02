@@ -7,12 +7,12 @@ const QuestionSchema = new Schema({
   type: {
     type: String,
     enum: _.values(QUESTION_TYPES),
-    required: true
+    required: true,
   },
   prompt: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 module.exports = QuestionSchema;
