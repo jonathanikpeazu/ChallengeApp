@@ -4,7 +4,7 @@
 This ChallengeApp implementation will set up a new MongoDB instance and Node server on your local machine. Ideally, I would ship this as a Docker container (or pair of Docker containers), but I did not have time for this demo.
 
 Steps to run locally:
-- Clone the repo from GitHub:
+- Clone the repo from GitHub: \
 `$ git clone https://github.com/jonathanikpeazu/ChallengeApp.git`
 
 - Run the install script. This will install mongodb to your machine via Homebrew, and create the local Mongo data directory: \
@@ -16,13 +16,15 @@ Steps to run locally:
    { mongoConfig: { url: 'mongodb://localhost:27017/challenge_app' } }`
 
 - Use cURL or the provided ChallengeApp.paw file to send requests to the JSONRPC-style API:
-```$ curl -X "POST" "http://localhost:3000/rpc" \
+```
+$ curl -X "POST" "http://localhost:3000/rpc" \
         -H 'Content-Type: application/json' \
         -d $'{
      "id": "1",
      "method": "Ping.ping"
    }'
-   {}```
+   {}
+```
 
 ## API Documentation
 ### Overview
