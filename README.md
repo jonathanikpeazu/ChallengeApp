@@ -11,8 +11,8 @@ Steps to run locally:
 `$ cd ChallengeApp` \
 `$ ./install.sh`
 
-- Start the server. If you encounter the error `Block-scoped declarations not yet supported`, you may have to upgrade your version of Node.:
-`$ node ./bin/www
+- Start the server. If you encounter the error `Block-scoped declarations not yet supported`, you may have to upgrade your version of Node. \
+`$ node ./bin/www \
    { mongoConfig: { url: 'mongodb://localhost:27017/challenge_app' } }`
 
 - Use cURL or the provided ChallengeApp.paw file to send requests to the JSONRPC-style API:
@@ -23,7 +23,7 @@ $ curl -X "POST" "http://localhost:3000/rpc" \
      "id": "1",
      "method": "Ping.ping"
    }'
-   {}
+>>> {}
 ```
 
 ## API Documentation
