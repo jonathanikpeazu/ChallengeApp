@@ -32,7 +32,7 @@ $ curl -X "POST" "http://localhost:3000/rpc" \
 ### Overview
 For this project, I decided to go with a JSONRpc-style API, rather than REST. REST is a great framework for serving and storing static web pages, but for large, interconnected applications where operations may have side-effects or affect multiple types of entities (especially ones that are not named in the request), it becomes nearly impossible to remain purely RESTful.
 
-JSONRPC is a good alternative because it requires less boilerplate, is easy to document, lends itself easily to batching requests (submit an array of methods instead of a single one) and since it is transport-agnostic (doesn't hard-code HTTP request types), it is easy to migrate to web sockets or any other transport protocol.
+JSONRPC is a good alternative because it requires less boilerplate, is easy to document, lends itself easily to batching requests, and since it doesn't hard-code HTTP request types, making it transport-agnostic and easy to migrate to web sockets or any other transport protocol.
 
 ### Data Model
 There are two main data types in this demo:
@@ -56,7 +56,7 @@ Since I have provided a PAW file with sample data, I will not fully explain the 
 Create a new challenge using the `Challenge.create` method. This will yield a new challenge. Use the `_id` of this document for `Challenge.findOne` and to create new responses. User-facing APIs should use `Challenge.findOne` without the flag `includeSolutions`.
 
 #### 2) Create a new user response
-Use `Response.begin` using the challengeId from `Challenge.create` and any old made-up `uid`. This will create a new `_IN_PROGRESS` Response document, which includes blank response templates and an empty scoring document.
+Use `Response.begin` using the challengeId from `Challenge.create` and any old made-up `uid`. This will create a new `IN_PROGRESS` Response document, which includes blank response templates and an empty scoring document.
 
 #### 3) Submit responses
 Use `Response.submitResponses` to submit batches of responses. You can submit responses many- or one-at a time, breaking the test into as many requests as you like.
@@ -69,21 +69,21 @@ Use `Response.submitScores` to give feedback on a user's finalized freetext resp
 
 ### Design Considerations
 #### Schema validation
-In a world of un-typed languages, things can get hairy, so it's important not to let garbage get into your database. This can be achieved by adding validation code to your controller functions, but I prefer to front-load this in the server layer when possible by defining `Joi` schemas for each request in `api/requestSchemas`. This simplifies both server and test code and leads to less duplication and boilerplate. It also has the benefit of being config-driven and self-documenting. There is still additional, more complex validation code in the controller layer, such as checking for the correct response type during `Response.submitResponses`.
+In a world of un-typed languages, things can get hairy, so it's important not to let garbage get into your database. We could do validate inside controller functions, but I prefer to front-load this in the server layer by defining `Joi` schemas for each request in `api/requestSchemas`. This simplifies both server and test code and leads to less duplication and boilerplate. It also has the benefit of being config-driven and self-documenting. There is still additional, more complex validation code in the controller layer, such as checking for the correct response type during `Response.submitResponses`.
 
 #### Model / Controller Design
 Mongoose offers the freedom to add custom pre-save hooks, class methods, etc. to our data model. However, I made the decision to keep all business logic (ex. assigning question/section IDs on the Challenge object in `Challenge.create`),to keep a nice decoupling between business logic, view logic, and database code. This is an advantage in case a technology migration ever needs to happen in the future.
 
 #### Unit Tests
-The unit tests for this module are incomplete, but I wrote a few for the more algo-intensive methods.
+The unit tests for this module are incomplete, but I wrote a few for the more algo-intensive methods in the `spec/` folder. Run `npm test` to kick-off the tests.
 
 #### ESLint
 ESLint was used to enforce quality on this repo. In production, I would us a CI hook to ensure passing of ESLint with no errors
 
 ### Hypothetical Front-End Application
-The user-facing side of this app would work by authenticating the user to display his/her available challenges (not implemented). Once a user selects a Challenge to complete, the app would load the entire challenge using `Challenge.findOne`, and use view elements to display a single section at once. Each time the user advanced to the next section, `Response.submitResponses` would be called. Finally, when the user arrived at the end, he/she would hit a button to call `Response.finalize()`.
+The user-facing side of this app would authenticate the user to display his/her available challenges (not implemented). Once a user selects a Challenge to complete, the app would load the entire challenge using `Challenge.findOne`, and use view elements to scroll through each section. Each time the user advanced to the next section, `Response.submitResponses` would be called to persist responses on the backend. Finally, at the end, he/she would hit a button to call `Response.finalize()`.
 
-The admin-facing side of this app would be a portal which allowed you to upload new test documents, query for highest scores (not implemented), and submit scores for freetext questions.
+The admin-facing side of this app would be a portal for uploading new test documents, querying for highest scores (not implemented), and submitting scores for freetext questions.
 
 ### Future Directions
 - More query methods for Responses. (`findByStatus()`, `findByHighScore()`, etc.)
