@@ -43,7 +43,9 @@ class RpcResponder {
   }
 
   respond(req, res) {
-    const { id, methodName, params } = req.body;
+    const id = req.body.id;
+    const methodName = req.body.method;
+    const params = req.body.params;
 
     const methodComponents = _.split(methodName, '.');
     const methodConfig = this.getMethod(methodComponents[0], methodComponents[1]);
