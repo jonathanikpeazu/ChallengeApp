@@ -1,10 +1,10 @@
 const _ = require('lodash');
 const VError = require('verror');
 
-const ScoringController = require('./../ScoringController/index');
-const { Response, Challenge } = require('../../model/index');
+const { Response, Challenge } = require('../../model');
 const { RESPONSE_STATUSES } = require('../../lib/constants');
-const utils = require('./utils');
+const utils = require('./lib/utils');
+const Scoring = require('./lib/scoring');
 
 class ResponseController {
   static begin(challengeId, uid) {
@@ -17,7 +17,7 @@ class ResponseController {
           challengeId,
           status: RESPONSE_STATUSES.IN_PROGRESS,
           responses: utils.createResponsesDoc(challenge),
-          scoring: ScoringController.createScoringDoc(challenge),
+          scoring: Scoring.createScoringDoc(challenge),
           createdAt: new Date(),
           updatedAt: new Date()
         };
@@ -69,10 +69,10 @@ class ResponseController {
         const challenge = results.challenge;
         const scoringDoc = response.scoring;
 
-        const multipleChoiceScores = ScoringController.getMultipleChoiceQuestionScores(challenge, response);
+        const multipleChoiceScores = Scoring.getMultipleChoiceQuestionScores(challenge, response);
         _.assign(scoringDoc.questions, multipleChoiceScores);
 
-        ScoringController.assignStatusAndOverallScore(scoringDoc);
+        Scoring.assignStatusAndOverallScore(scoringDoc);
 
         const updatedScoringDoc = _.cloneDeep(scoringDoc);
         console.log({ updatedScoringDoc });
@@ -124,7 +124,7 @@ class ResponseController {
           }
         });
         
-        ScoringController.assignStatusAndOverallScore(scoringDoc);
+        Scoring.assignStatusAndOverallScore(scoringDoc);
 
         response.scoring = null;
         _.assign(response, {
