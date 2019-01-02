@@ -29,7 +29,7 @@ const Scoring = {
   },
 
   getMultipleChoiceQuestionScores(challenge, response) {
-    const { responses } = response.responses;
+    const responses = response.responses;
 
     const multipleChoiceQuestions = _(challenge.sections)
       .map(section => _.filter(section.questions, isQuestionMultipleChoice))
