@@ -63,11 +63,6 @@ class RpcResponder {
 
     const paramsSchema = _.get(this._schemas, methodName);
     if (paramsSchema) {
-      // todo - figure out the "Joi" way to do this.
-      if (!params) {
-        return this.constructor.sendErrorResponse(res, id, 400, new VError('Validation error: Must attach params object'));
-      }
-
       const validationError = paramsSchema.validate(params).error;
       if (validationError) {
         return this.constructor.sendErrorResponse(res, id, 400, validationError);
