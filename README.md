@@ -7,7 +7,7 @@ Steps to run locally:
 - Clone the repo from GitHub:
 `$ git clone https://github.com/jonathanikpeazu/ChallengeApp.git`
 
-- Run the install script. This will install mongodb to your machine via Homebrew, and create the local Mongo data directory:
+- Run the install script. This will install mongodb to your machine via Homebrew, and create the local Mongo data directory: \
 `$ cd ChallengeApp` \
 `$ ./install.sh`
 
@@ -16,13 +16,13 @@ Steps to run locally:
    { mongoConfig: { url: 'mongodb://localhost:27017/challenge_app' } }`
 
 - Use cURL or the provided ChallengeApp.paw file to send requests to the JSONRPC-style API:
-`$ curl -X "POST" "http://localhost:3000/rpc" \
+```$ curl -X "POST" "http://localhost:3000/rpc" \
         -H 'Content-Type: application/json' \
         -d $'{
      "id": "1",
      "method": "Ping.ping"
    }'
-   {}`
+   {}```
 
 ## API Documentation
 ### Overview
