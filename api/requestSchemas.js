@@ -5,7 +5,7 @@ const constants = require('../lib/constants');
 module.exports = {
   Ping: {
     ping: Joi.object().keys({
-      message: Joi.string().required(),
+      message: Joi.string().required().allow(''),
     })
   },
 
@@ -55,7 +55,7 @@ module.exports = {
           response: Joi.alternatives()
             .when('type', { is: constants.QUESTION_TYPES.MULTI_MULTI, then: Joi.array().items(Joi.string()) })
             .when('type', { is: constants.QUESTION_TYPES.MULTI_ONE, then: Joi.array().items(Joi.string()) })
-            .when('type', { is: constants.QUESTION_TYPES.FREETEXT, then: Joi.string() })
+            .when('type', { is: constants.QUESTION_TYPES.FREETEXT, then: Joi.string().allow('') })
             .required(),
         })),
     }),

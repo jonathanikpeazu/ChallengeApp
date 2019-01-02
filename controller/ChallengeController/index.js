@@ -20,7 +20,7 @@ class ChallengeController {
       section.id = String(sectionIndex);
 
       section.questions = _.map(section.questions, (question, questionIndex) => {
-        // Assign an Object ID to each question
+        // Assign an ID to each question
         const completeQuestion = _.assign(question, {
           id: `${sectionIndex}_${questionIndex}`,
         });
@@ -39,7 +39,7 @@ class ChallengeController {
 
     const newChallenge = new Challenge(attributes);
 
-    return newChallenge.save().then(() => newChallenge);
+    return newChallenge.save();
   }
 
   static findOne(challengeId, options) {
