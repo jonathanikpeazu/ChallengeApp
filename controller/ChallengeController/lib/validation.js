@@ -1,9 +1,7 @@
 const _ = require('lodash');
 
-const constants = require('../../../lib/constants');
 const isQuestionMultipleChoice = require('./../../../lib/isQuestionMultipleChoice');
 
-// todo - TEST
 const ChallengeValidation = {
   isValidChallenge(attributes) {
     return (

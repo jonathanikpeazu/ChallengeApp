@@ -6,7 +6,7 @@ module.exports = {
   Ping: {
     ping: Joi.object().keys({
       message: Joi.string().required().allow(''),
-    })
+    }),
   },
 
   Challenge: {

@@ -130,7 +130,7 @@ class ResponseController {
         });
 
         Scoring.assignStatusAndOverallScore(scoringDoc);
-        
+
         // todo - remove updatedAt boilerplate by using a Model mixin.
         response.scoring = null;
         _.assign(response, {
