@@ -32,10 +32,10 @@ $ curl -X "POST" "http://localhost:3000/rpc" \
 ```
 
 ## API Documentation
-### Overview
-For this project, I decided to go with a JSONRpc-style API, rather than REST. REST is a great framework for serving and storing static web pages, but for large, interconnected applications where operations may have side-effects or affect multiple types of entities (especially ones that are not named in the request), it becomes nearly impossible to remain purely RESTful.
+### RPC-Style API
+For this project, I decided to go with a JSON RPC-style API, rather than REST. REST is a great pattern for serving and storing static web pages, but for complex applications where operations may have side-effects or cause changes to other entities outside of the request, it becomes impossible to remain purely RESTful.
 
-JSONRPC is a good alternative because it requires less boilerplate, is easy to document, lends itself easily to batching requests, and since it doesn't hard-code HTTP request types, making it transport-agnostic and easy to migrate to web sockets or any other transport protocol.
+RPC style is a good alternative because it requires less boilerplate, is easy to document, and is transport-agnostic, making it easy to migrate to web sockets or any other transport protocol.
 
 ### Data Model
 There are two main data types in this demo:
