@@ -4,7 +4,6 @@ const { SCORING_STATUSES } = require('../../../lib/constants');
 const isQuestionMultipleChoice = require('../../../lib/isQuestionMultipleChoice');
 
 const Scoring = {
-
   getMultipleChoiceQuestionScores(challenge, response) {
     const responses = response.responses;
 

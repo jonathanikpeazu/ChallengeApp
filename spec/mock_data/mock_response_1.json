@@ -1,0 +1,46 @@
+{
+  "_id": "5c2c2eb042f1e34cf4dc950c",
+  "uid": "user_one",
+  "challengeId": "5c2c1ade1d23b8465e53414d",
+  "status": "IN PROGRESS",
+  "responses": {
+    "0_0": {
+      "type": "freetext",
+      "response": null
+    },
+    "0_1": {
+      "type": "multi_one",
+      "response": null
+    },
+    "1_0": {
+      "type": "multi_multi",
+      "response": null
+    }
+  },
+  "scoring": {
+    "status": "NOT STARTED",
+    "score": -1,
+    "questions": {
+      "0_0": {
+        "score": -1
+      },
+      "0_1": {
+        "score": -1
+      },
+      "1_0": {
+        "score": -1
+      }
+    },
+    "sections": {
+      "0": {
+        "score": -1
+      },
+      "1": {
+        "score": -1
+      }
+    }
+  },
+  "createdAt": "2019-01-02T03:23:28.752Z",
+  "updatedAt": "2019-01-02T03:23:28.752Z",
+  "__v": 0
+}
