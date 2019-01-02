@@ -1,10 +1,10 @@
 const _ = require('lodash');
 
 require('./Mockgoose');
-const mockChallengeData = require('../mock_data/mock_challenge_1');
+const mockChallengeData = require('./mock_data/mock_challenge_1');
 const isQuestionMultipleChoice = require('../lib/isQuestionMultipleChoice');
-const { Challenge } = require('../model');
 const ChallengeController = require('../controller/ChallengeController');
+const { Challenge } = require('../model');
 
 let mockChallenge;
 beforeEach(() => {
