@@ -11,7 +11,7 @@ Steps to run locally:
 `$ cd ChallengeApp` \
 `$ ./install.sh`
 
-- Start the server. If you encounter the error `Block-scoped declarations not yet supported`, you may have to upgrade your version of Node. \
+- Start the server. If you encounter the error `Block-scoped declarations not yet supported`, you may have to upgrade your version of Node.
 ```
 $ node ./bin/www
 >>> { mongoConfig: { url: 'mongodb://localhost:27017/challenge_app' } }
