@@ -83,7 +83,7 @@ Mongoose offers the freedom to add custom pre-save hooks, class methods, etc. to
 The unit tests for this module are incomplete, but I wrote a few for the more algo-intensive methods in the `spec/` folder. Run `npm test` to kick-off the tests.
 
 #### ESLint
-ESLint was used to enforce quality on this repo. In production, I would us a CI hook to ensure passing of ESLint with no errors
+ESLint was used with the AirBnb style guide to ensure production quality.
 
 ### Hypothetical Front-End Application
 The user-facing side of this app would authenticate the user to display his/her available challenges (not implemented). Once a user selects a Challenge to complete, the app would load the entire challenge using `Challenge.findOne`, and use view elements to scroll through each section. Each time the user advanced to the next section, `Response.submitResponses` would be called to persist responses on the backend. Finally, at the end, he/she would hit a button to call `Response.finalize()`.
