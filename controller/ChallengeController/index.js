@@ -2,7 +2,7 @@ const _ = require('lodash');
 const VError = require('verror'); // todo - custom error classes
 const { Challenge } = require('../../model/index');
 
-const ChallengeValidation = require('./lib/ChallengeValidation');
+const ChallengeValidation = require('./lib/validation');
 const removeSolutionsFromChallenge = require('./lib/removeSolutionsFromChallenge');
 const isQuestionMultipleChoice = require('./../../lib/isQuestionMultipleChoice');
 
