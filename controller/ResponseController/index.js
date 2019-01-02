@@ -135,10 +135,12 @@ class ResponseController {
         Scoring.assignStatusAndOverallScore(scoringDoc);
 
         response.scoring = null;
+        
+        // todo - remove updatedAt boilerplate by using a Model mixin.
         _.assign(response, {
           scoring: scoringDoc,
           updatedAt: new Date()
-        }); // todo johno - remove updatedAt boilerplate
+        }); 
 
         return response.save().then(() => response)
       })
